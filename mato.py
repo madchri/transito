@@ -1,85 +1,87 @@
 from requests import post
+from datetime import datetime
 
-# Recupera i passaggi alla fermata
-def passaggi(fermata, ora):
-    richiesta_id = {
-        "id": "q01",
-        "query": """
-            query StopRoutes($id_0: String!) {
-                stop(id:$id_0) {
-                    id
-                }
-            }
-        """,
-        "variables": {
-            "id_0": f"gtt:{fermata}"
-        }
-    }
+def passaggi_mato(fermata, ora):
     URL_API = "https://plan.muoversiatorino.it/otp/routers/mato/index/graphql"
-    try:
-        risposta_id = post(URL_API, headers = {"Content-Type": "application/json"}, json = richiesta_id)
-        id_fermata = risposta_id.json()["data"]["stop"]["id"]
-    except Exception:
-        return tuple()
     richiesta_dati = {
         "id": "q02",
         "query": """
-            query StopPageContentContainer_StopRelayQL($id_0:ID!,$startTime_1:Long!,$timeRange_2:Int!,$numberOfDepartures_3:Int!) {
-                node(id:$id_0) {
-                    ...F2
-                }
-            }
-            fragment F1 on Stoptime {
-                realtime
-                realtimeArrival
-                trip {
-                    tripHeadsign
-                    wheelchairAccessible
-                    pattern {
-                        route {
-                            mode
-                            shortName
+            query StopPageContentContainer_StopRelayQL($id_0:String!,$startTime_1:Long!,$timeRange_2:Int!,$numberOfDepartures_3:Int!) {
+                stop(id:$id_0) {
+                    stoptimesWithoutPatterns(startTime:$startTime_1,timeRange:$timeRange_2,numberOfDepartures:$numberOfDepartures_3,omitCanceled:true) {
+                        realtime
+                        realtimeArrival
+                        trip {
+                            tripHeadsign
+                            wheelchairAccessible
+                            pattern {
+                                route {
+                                    mode
+                                    shortName
+                                }
+                            }
                         }
                     }
                 }
             }
-            fragment F2 on Stop {
-                _stoptimesWithoutPatterns1WnWVl:stoptimesWithoutPatterns(
-                    startTime:$startTime_1,
-                    timeRange:$timeRange_2,
-                    numberOfDepartures:$numberOfDepartures_3,
-                    omitCanceled:true
-                ) {
-                    ...F1
-                }
-            }
         """,
         "variables": {
-            "id_0": id_fermata,
-            "startTime_1": ora.timestamp(),
-            "timeRange_2": 3600,
-            "numberOfDepartures_3": 3600
+            "id_0": f"gtt:{fermata}",
+            "startTime_1": int(ora.timestamp() - 30),
+            "timeRange_2": 86400,
+            "numberOfDepartures_3": 86400
         }
     }
+
     try:
         risposta_dati = post(URL_API, headers = {"Content-Type": "application/json"}, json = richiesta_dati)
-        output = risposta_dati.json()["data"]["node"]["_stoptimesWithoutPatterns1WnWVl"]
-        return output
+        output = risposta_dati.json()["data"]["stop"]["stoptimesWithoutPatterns"]
     except Exception:
-        return tuple()
+        return {}
 
-# Calcola gli orari a partire dai secondi
-def orari(secondiRT, ora):
+    mezzi = {}
+    for linea in output:
+        nome_linea = linea["trip"]["pattern"]["route"]["shortName"]
+        orarioRT, minuti_restanti = converti_orario(linea["realtimeArrival"], ora)
+
+        if nome_linea not in mezzi:
+            if linea["trip"]["wheelchairAccessible"] == "POSSIBLE":
+                accessibile = True
+            else:
+                accessibile = False
+            mezzi[nome_linea] = {
+                "tipo": linea["trip"]["pattern"]["route"]["mode"],
+                "direzione": linea["trip"]["tripHeadsign"],
+                "accessibilita" : accessibile,
+                "arrivi": []
+            }
+        
+        arrivo = {
+            "orario": orarioRT,
+            "realtime" : linea["realtime"],
+            "minuti_restanti": minuti_restanti
+        }
+        mezzi[nome_linea]["arrivi"].append(arrivo)
+
+    return mezzi
+
+def converti_orario(secondiRT, ora):
+    inizio_giornata = datetime(ora.year, ora.month, ora.day)
+    secondi_correnti = int((ora - inizio_giornata).total_seconds())
+    
+    minuti_restanti = (secondiRT - secondi_correnti) // 60
+
     oraRT = (secondiRT // 3600) % 24
     minutiRT = (secondiRT % 3600) // 60
-    if oraRT < 10:
-        oraRT = '0' + str(oraRT)
-    if minutiRT < 10:
-        minutiRT = '0' + str(minutiRT)
-    orarioRT = str(oraRT) + ':' + str(minutiRT)
-    minuti_restanti = abs((ora.hour * 3600) + (ora.minute * 60) + ora.second - secondiRT) // 60
-    if minuti_restanti == 0:
-        tempo = "ora"
+    orarioRT = f"{oraRT:02}:{minutiRT:02}"
+
+    if minuti_restanti < 0:
+        minuti_restanti = False
+    elif minuti_restanti == 0:
+        minuti_restanti = "1 min"
+    elif minuti_restanti < 10:
+        minuti_restanti = f"{minuti_restanti} min"
     else:
-        tempo = str(minuti_restanti) + " min"
-    return (tempo, orarioRT)
+        minuti_restanti = orarioRT
+    
+    return orarioRT, minuti_restanti
