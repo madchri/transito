@@ -3,6 +3,9 @@ Questa applicazione per Android, creata utilizzando Python e la libreria Flet, c
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
+![full](https://github.com/user-attachments/assets/be989790-68b1-4a64-98ab-d8ab50e12176)
+
+
 ## Funzionalità
 **Avvisi**:
 
