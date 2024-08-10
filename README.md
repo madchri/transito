@@ -3,13 +3,14 @@ Questa applicazione per Android, creata utilizzando Python e la libreria Flet, c
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-![full](https://github.com/user-attachments/assets/be989790-68b1-4a64-98ab-d8ab50e12176)
-
-
 ## Funzionalità
 **Avvisi**:
 
 Appena avviata, l'app accoglie l'utente con una pagina contenente tutti gli avvisi sulla mobilità recentemente pubblicati da GTT.
+
+**Preferiti**:
+
+La pagina dei preferiti consente di salvare le fermate più utilizzate per un accesso più rapido, attribuendo loro anche un nome identificativo a piacere. Nella stessa schermata è possibile anche accedere in modo veloce alla cronologia delle ricerche effettuate in precedenza.
 
 **Ricerca**:
 
@@ -28,7 +29,8 @@ In particolare, le diciture sono articolate come segue:
 
 Permette di consultare i crediti dell'applicazione, verificarne gli aggiornamenti e gestire alcune impostazioni.
 - Tema: consente di scegliere tra tema chiaro o scuro
-- Cerca all'avvio: consente di selezionare il campo di ricerca in modo automatico all'avvio dell'app
+- Apri preferiti: consente di far avviare l'app direttamente sulla pagina dei preferiti
+- Elimina dati: consente di ripristinare tutte le impostazioni dell'app ai valori predefiniti
 
 ## Funzionamento
 Una volta inserito il numero della fermata, l'applicazione si connette al server e recupera le informazioni sugli orari di transito dei veicoli.
