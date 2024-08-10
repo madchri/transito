@@ -46,9 +46,9 @@ def passaggi_mato(fermata, ora):
 
         if nome_linea not in mezzi:
             if linea["trip"]["wheelchairAccessible"] == "POSSIBLE":
-                accessibile = True
+                accessibile = "ACCESSIBILE AI DISABILI"
             else:
-                accessibile = False
+                accessibile = "NON ACCESSIBILE AI DISABILI"
             mezzi[nome_linea] = {
                 "tipo": linea["trip"]["pattern"]["route"]["mode"],
                 "direzione": linea["trip"]["tripHeadsign"],
