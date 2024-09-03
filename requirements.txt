@@ -2,4 +2,3 @@ bs4
 flet
 requests
 feedparser
-gtfs-realtime-bindings
