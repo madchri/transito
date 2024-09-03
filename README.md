@@ -1,36 +1,28 @@
 # TransiTO
-Questa applicazione per Android, creata utilizzando Python e la libreria Flet, consente di recuperare gli orari di transito dei veicoli della GTT (Gruppo Torinese Trasporti) ad una fermata specifica.
+Applicazione per Android che consente di recuperare gli orari di transito dei veicoli della GTT (Gruppo Torinese Trasporti) ad una fermata specifica.
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Funzionalità
-**Avvisi**:
+**Notizie**:
 
 Appena avviata, l'app accoglie l'utente con una pagina contenente tutti gli avvisi sulla mobilità recentemente pubblicati da GTT.
 
-**Preferiti**:
-
-La pagina dei preferiti consente di salvare le fermate più utilizzate per un accesso più rapido, attribuendo loro anche un nome identificativo a piacere. Nella stessa schermata è possibile anche accedere in modo veloce alla cronologia delle ricerche effettuate in precedenza.
-
 **Ricerca**:
 
-Nella parte superiore della pagina è ben evidenziata ed accessibile la barra di ricerca che consente di immettere il numero della fermata che si desidera per ottenere gli orari di transito.
-Una volta eseguita, la ricerca mostra tutti i mezzi in arrivo alla fermata specificata, ognuno con la relativa direzione ed orario: quest'ultimo è reso di immediata comprensione grazie alla visualizzazione dei minuti restanti all'arrivo del mezzo rispetto all'orario in cui è stata effettuata la ricerca.
+Consente di salvare le fermate più utilizzate per un accesso più rapido, attribuendo loro un nome identificativo a piacere.
 
-In particolare, le diciture sono articolate come segue:
--  Indicazione del tipo di mezzo (tramite icona)
--  Indicazione del nome della linea
--  Indicazione dei minuti rimanenti all'arrivo
--  Indicazione del tipo di orario: programmato o in tempo reale (tramite colore)
--  Indicazione della direzione del mezzo
--  Indicazione dell'accessibilità del mezzo per utenti disabili
+Nella parte superiore della pagina è ben evidenziata ed accessibile la barra di ricerca che consente di immettere il numero della fermata che si desidera per ottenere gli orari di transito.
+Una volta eseguita, la ricerca mostra tutti i mezzi in arrivo alla fermata specificata, ognuno con il relativo orario.
 
 **Impostazioni**:
 
 Permette di consultare i crediti dell'applicazione, verificarne gli aggiornamenti e gestire alcune impostazioni.
-- Tema: consente di scegliere tra tema chiaro o scuro
-- Apri preferiti: consente di far avviare l'app direttamente sulla pagina dei preferiti
+- Tema scuro: consente di scegliere tra tema chiaro o scuro
+- Cerca all'avvio: consente di far avviare l'app direttamente sulla pagina dei preferiti
+- Orari semplici: consente di mostrare i minuti rimanenti all'arrivo del mezzo anzichè l'orario
 - Elimina dati: consente di ripristinare tutte le impostazioni dell'app ai valori predefiniti
+- GitHub: rimanda a questa pagina
 
 ## Funzionamento
 Una volta inserito il numero della fermata, l'applicazione si connette al server e recupera le informazioni sugli orari di transito dei veicoli.
