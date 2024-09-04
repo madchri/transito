@@ -3,7 +3,7 @@ from apis import get_rss, get_updates, get_times
 
 def main(page):
 
-    VERSION = "2.0.0"
+    VERSION = "2.0.1"
     page.title = "TransiTO"
     page.scroll = ft.ScrollMode.HIDDEN
 
@@ -34,6 +34,7 @@ def main(page):
         else:
             pagelet.content = pagelet3_content
             page.floating_action_button.visible = False
+        page.drawer.selected_index = page.navigation_bar.selected_index
         page.appbar.title.controls[0].icon = ft.icons.MENU
         page.appbar.title.controls[0].on_click = open_drawer
         page.appbar.title.controls[2].icon = ft.icons.SEARCH
@@ -141,7 +142,7 @@ def main(page):
     page.floating_action_button = ft.FloatingActionButton(icon=ft.icons.ADD, text="Aggiungi", visible=False, shape=ft.StadiumBorder(), on_click=add_fav)
     page.floating_action_button_location = ft.FloatingActionButtonLocation.CENTER_FLOAT
 
-    page.navigation_bar = ft.NavigationBar(destinations=[ft.NavigationBarDestination(icon=ft.icons.NEWSPAPER_OUTLINED, selected_icon=ft.icons.NEWSPAPER, label="Notizie"),ft.NavigationBarDestination(icon=ft.icons.SEARCH_OUTLINED, selected_icon=ft.icons.SEARCH, label="Ricerca"),ft.NavigationBarDestination(icon=ft.icons.SETTINGS_OUTLINED, selected_icon=ft.icons.SETTINGS, label="Impostaz.")],label_behavior=ft.NavigationBarLabelBehavior.ALWAYS_SHOW,on_change=change_pagelet)
+    page.navigation_bar = ft.NavigationBar(destinations=[ft.NavigationBarDestination(icon=ft.icons.NEWSPAPER_OUTLINED, selected_icon=ft.icons.NEWSPAPER, label="Notizie"),ft.NavigationBarDestination(icon=ft.icons.SEARCH_OUTLINED, selected_icon=ft.icons.SEARCH, label="Ricerca"),ft.NavigationBarDestination(icon=ft.icons.SETTINGS_OUTLINED, selected_icon=ft.icons.SETTINGS, label="Impost.")],label_behavior=ft.NavigationBarLabelBehavior.ALWAYS_SHOW,on_change=change_pagelet)
 
     page.appbar = ft.AppBar(title=ft.Row(controls=[ft.IconButton(icon=ft.icons.MENU, icon_size=30, on_click=open_drawer),ft.TextField(filled=True, hint_text="Cerca fermata", text_vertical_align = 1.0, text_align=ft.TextAlign.CENTER,keyboard_type=ft.KeyboardType.NUMBER, border_radius=100, height=56.0,expand=True, on_submit=start_search),ft.IconButton(icon=ft.icons.SEARCH, icon_size=30, on_click=start_search)]),center_title=True,automatically_imply_leading=False,toolbar_height=85)
 
