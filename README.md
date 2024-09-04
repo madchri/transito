@@ -24,9 +24,12 @@ Permette di consultare i crediti dell'applicazione, verificarne gli aggiornament
 - Elimina dati: consente di ripristinare tutte le impostazioni dell'app ai valori predefiniti
 - GitHub: rimanda a questa pagina
 
-## Funzionamento
-Una volta inserito il numero della fermata, l'applicazione si connette al server e recupera le informazioni sugli orari di transito dei veicoli.
-La query utilizzata per le richieste restituisce le informazioni organizzate in diversi dizionari, i quali includono il nome della linea, la direzione del veicolo e l'orario di arrivo alla fermata in secondi a partire dalla mezzanotte. Questi dati vengono gestiti in modo da renderne possibile la visualizzazione a schermo.
+## Creazione apk
+
+Per creare l'apk a partire dal codice sorgente, utilzza questo comando dopo aver installato le librerie contenute nel file requirements.txt
+```
+flet build apk --product "TransiTO" --company "madchri" --org "com.madchri" --project "transito" --build-version "2.0.1" --no-android-splash --no-ios-splash --no-web-splash`
+```
 
 ## Crediti
 L'icona dell'app è stata ottenuta da icon-icons.com sotto licenza Creative Commons CC BY 4.0 Deed.
